@@ -455,8 +455,8 @@ var FORMATS = {
   '4x6': { sheet: false, w: 4, h: 6, name: 40, loc: 24 }, '2x4': { sheet: false, w: 4, h: 2.3125, name: 26, loc: 15 }, '2x1': { sheet: false, w: 2, h: 1, name: 12, loc: 8 }
 };
 function perBag() { var n = 10; try { n = parseInt(localStorage.getItem('ampPerBag'), 10) || 10; } catch (e) {} return Math.max(1, Math.min(99, n)); }
-function mealCount(o) { return (o.items || []).reduce(function (a, i) { return a + (+i.qty || 0); }, 0); }
-function bagsFor(o) { return Math.max(1, Math.ceil(mealCount(o) / perBag())); }
+function mealsIn(o) { return (o.items || []).reduce(function (a, i) { return a + (+i.qty || 0); }, 0); }
+function bagsFor(o) { return Math.max(1, Math.ceil(mealsIn(o) / perBag())); }
 function bagLabelCount(list) { return list.reduce(function (a, o) { return a + bagsFor(o); }, 0); }
 function printView(type, fmt) {
   var orders = byDay(D.orders || [], ST.day), label = D.label + (ST.day ? ' · ' + dayLabel(ST.day) : '');
