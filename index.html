@@ -183,7 +183,7 @@ body.tv{background:#fff;color:#111}
 .keep{display:flex;gap:8px;align-items:center;font-size:.95rem}.keep input{width:22px;height:22px}
 .warnbox{background:#fff7e6;border:1px solid #f5d79e;color:#7a4b00;border-radius:12px;padding:10px 12px;font-size:.92rem}
 @media (max-width:860px){.hf{grid-template-columns:1fr}.talk{min-height:130px}}
-</style><style id="pstyle"></style></head>
+.pw-row{display:block;margin:14px 0}.pw-row b{display:block}.pw-row span{display:block;font-size:13px;margin:2px 0 6px}.pw-row input{width:100%;max-width:420px;padding:10px 12px;font-size:16px;border:1px solid #cfd3da;border-radius:8px;font-family:ui-monospace,Menlo,monospace}</style><style id="pstyle"></style></head>
 <body>
 <div id="app"><div class="loading">Loading…</div></div>
 <div id="print"></div>
@@ -274,9 +274,9 @@ function render() {
   var packed = orders.filter(function (o) { return o.status === 'packed' || o.status === 'picked'; }).length;
   var limits = D.limits || {}, ord = ordered(orders), ordMap = {}; ord.forEach(function (x) { ordMap[x[0]] = x[1]; });
   var soldOut = ord.filter(function (x) { return limits[x[0]] && x[1] >= limits[x[0]]; }).map(function (x) { return x[0]; });
-  var tab = ST.tab; if (!owner && (tab === 'limits' || tab === 'screens')) tab = 'meals';
+  var tab = ST.tab; if (!owner && (tab === 'limits' || tab === 'screens' || tab === 'passwords')) tab = 'meals';
   var tabs = [['meals', 'Meal List'], ['specials', 'Specials (' + sp.length + ')'], ['pack', 'Pack Orders'], ['gyms', 'Orders by Gym'], ['labels', 'Labels']];
-  if (owner) { tabs.push(['limits', 'Sold-Out Limits' + (soldOut.length ? ' (' + soldOut.length + ')' : '')]); tabs.push(['screens', 'Kitchen Screens']); }
+  if (owner) { tabs.push(['limits', 'Sold-Out Limits' + (soldOut.length ? ' (' + soldOut.length + ')' : '')]); tabs.push(['screens', 'Kitchen Screens']); tabs.push(['passwords', 'Passwords']); }
   tabs.push(['voice', 'Voice & Pedal']);
   var h = [];
   h.push('<div class="install-tip" id="installTip" hidden><span id="installText">Add AMP Kitchen to your home screen: tap <b>Share</b> then <b>Add to Home Screen</b>.</span><button class="x" data-a="hideTip" aria-label="Close">✕</button></div>');
@@ -302,7 +302,7 @@ function render() {
     '<button class="print-btn" data-a="print" data-v="labels"><b>Bag Labels</b><span>' + orders.length + ' labels, by gym</span></button>' +
     '<button class="print-btn" data-a="print" data-v="containers"><b>Container Labels</b><span>' + mealsAll + ' labels, one per meal</span></button></section>');
   h.push('<nav class="tabs">' + tabs.map(function (t) { return '<button class="tab' + (tab === t[0] ? ' on' : '') + '" data-a="tab" data-v="' + t[0] + '">' + esc(t[1]) + '</button>'; }).join('') + '</nav>');
-  if (!orders.length && !D.error && tab !== 'voice' && tab !== 'screens') h.push('<div class="card empty">No orders for ' + esc(String(D.label).toLowerCase()) + '.</div>');
+  if (!orders.length && !D.error && tab !== 'voice' && tab !== 'screens' && tab !== 'passwords') h.push('<div class="card empty">No orders for ' + esc(String(D.label).toLowerCase()) + '.</div>');
 
   if (tab === 'meals' && orders.length) {
     if (mealsLeft < mealsAll) h.push('<p class="muted" style="margin-top:-4px">Showing meals <b>still to make</b>. Orders marked Made come off this list.</p>');
@@ -379,6 +379,19 @@ function render() {
     h.push('</div><p class="muted" id="screenNow">Screens are showing: <b>' + esc(VIEWS[sc.view] || 'Meal List') + '</b>' + (sc.sent ? ' · sent ' + new Date(sc.sent).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' }) : '') + '</p>' +
       '<h3>Setting up a TV (one time)</h3><ol class="steps"><li>On the TV (smart TV browser, or a Fire TV Stick / Google TV with a browser), open:<br><code>' + esc(tvUrl) + '</code></li><li>Tap "Full screen" and leave it. It updates by itself.</li><li>Test it: <a target="_blank" href="' + esc(tvUrl) + '">open the kitchen screen</a>.</li></ol></div>');
   }
+  if (tab === 'passwords' && owner) {
+    var C = window.AMP_CODES;
+    h.push('<div class="card"><h2>Passwords</h2><p>Change who can get into the app. Everyone using an old password will be asked to sign in again with the new one.</p>');
+    if (!C) { h.push('<p class="muted" id="codesMsg">Loading…</p></div>'); setTimeout(function () { api('codes').then(function (j) { if (j.ok) { window.AMP_CODES = j.codes; if (ST.tab === 'passwords') render(); } else { var e = $('codesMsg'); if (e) e.textContent = j.error || 'Could not load passwords.'; } }); }, 0); }
+    else {
+      var row = function (id, label, help, val) { return '<label class="pw-row"><b>' + label + '</b><span class="muted">' + help + '</span><input id="' + id + '" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="' + esc(val) + '"></label>'; };
+      h.push(row('pwOwner', 'Owner password', 'Full access: limits, kitchen screens, passwords.', C.owner) +
+        row('pwCook', 'Cook password', 'Make lists, labels, packing. Can\'t change limits or passwords.', C.cook) +
+        row('pwTv', 'TV screen code', 'Part of the kitchen TV link. If you change it, reopen the TV link on each TV.', C.tv) +
+        '<p class="muted">6 to 40 letters or numbers (dashes and underscores are OK, no spaces). All three must be different.</p>' +
+        '<button class="btn big" data-a="saveCodes">Save passwords</button></div>');
+    }
+  }
   if (tab === 'voice') {
     h.push('<div class="card"><h2>Hands-free packing</h2><p>Put a tablet or phone by the prep line and open the <b>Hands-Free</b> screen. Cooks can run the packing line by voice or with a foot pedal, so nobody touches a screen with gloves on.</p><a class="btn big" href="' + BASE + '?mode=voice">🎙 Open Hands-Free screen</a>' +
       '<div class="how-grid" style="margin-top:18px"><div><span class="src s1">Voice</span><p>Tap the big Talk button with an elbow (or use a Bluetooth headset) and say a command. The app says it back out loud.</p></div><div><span class="src s2">Foot pedal</span><p>A USB or Bluetooth pedal works like a keyboard. <b>Tap</b> = mark done. <b>Right pedal / arrow</b> = next order. <b>Left</b> = back.</p></div><div><span class="src s3">TVs follow along</span><p>Whatever order is up shows big on the kitchen TVs, so the whole crew can see it.</p></div></div>' +
@@ -411,6 +424,19 @@ document.addEventListener('click', function (e) {
   else if (a === 'undo') api('undo').then(function (j) { if (j.undone) refresh(true); else toast('Nothing to undo'); });
   else if (a === 'saveLimits') { var lim = {}; document.querySelectorAll('.lim').forEach(function (i) { if (i.value) lim[i.dataset.meal] = +i.value; }); b.textContent = 'Saving…'; api('limits', { limits: lim }).then(function (j) { if (j.ok) { toast('Limits saved'); refresh(true); } else { toast(j.error || 'Try again'); b.textContent = 'Save limits'; } }); }
   else if (a === 'send') api('screen', { view: v, range: ST.range, from: ST.from, to: ST.to, day: ST.day }).then(function (j) { if (j.ok) { $('screenNow').innerHTML = 'Screens are showing: <b>' + VIEWS[v] + '</b> · just now'; toast('Sent! TVs update in a few seconds.'); } else toast(j.error || 'Try again'); });
+  else if (a === 'saveCodes') {
+    var nc = { owner: $('pwOwner').value.trim(), cook: $('pwCook').value.trim(), tv: $('pwTv').value.trim() };
+    var old = window.AMP_CODES || {};
+    var msg = 'Save these passwords?';
+    if (nc.owner !== old.owner) msg += '\n\nYour owner password changes to: ' + nc.owner + '\nWrite it down. You will need it on your other devices.';
+    if (nc.tv !== old.tv) msg += '\n\nThe TV code changed. Reopen the new TV link on each kitchen TV.';
+    if (!confirm(msg)) return;
+    b.textContent = 'Saving…'; b.disabled = true;
+    api('setCodes', nc).then(function (j) {
+      if (j.ok) { window.AMP_CODES = j.codes; if (nc.owner !== old.owner) { CODE = nc.owner; try { localStorage.setItem('ampCode', CODE); } catch (x) {} } toast('Passwords saved'); refresh(true); }
+      else { toast(j.error || 'Try again'); b.textContent = 'Save passwords'; b.disabled = false; }
+    });
+  }
   else if (a === 'print') printView(v, b.dataset.f);
 });
 
