@@ -183,7 +183,7 @@ body.tv{background:#fff;color:#111}
 .keep{display:flex;gap:8px;align-items:center;font-size:.95rem}.keep input{width:22px;height:22px}
 .warnbox{background:#fff7e6;border:1px solid #f5d79e;color:#7a4b00;border-radius:12px;padding:10px 12px;font-size:.92rem}
 @media (max-width:860px){.hf{grid-template-columns:1fr}.talk{min-height:130px}}
-.pw-row{display:block;margin:14px 0}.pw-row b{display:block}.pw-row span{display:block;font-size:13px;margin:2px 0 6px}.pw-row input{width:100%;max-width:420px;padding:10px 12px;font-size:16px;border:1px solid #cfd3da;border-radius:8px;font-family:ui-monospace,Menlo,monospace}.phelp{flex-basis:100%;font-size:14px;line-height:1.45;background:#fff8e6;border:1px solid #f0d58a;border-radius:8px;padding:10px 12px;color:#333}.phelp #pfail{margin-top:8px;color:#9b2c00}.phelp a{color:#1d67cd;font-weight:bold}@media print{.pbar{display:none!important}}.perbag{display:inline-flex;align-items:center;gap:8px;font-weight:600;margin:0 0 12px}.perbag input{width:70px;padding:8px 10px;font-size:16px;border:1px solid #cfd3da;border-radius:8px}.lbl .bag{font-size:13px;font-weight:800;letter-spacing:.04em;margin-top:3px;padding:1px 8px;background:#000;color:#fff;border-radius:3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}</style><style id="pstyle"></style></head>
+.pw-row{display:block;margin:14px 0}.pw-row b{display:block}.pw-row span{display:block;font-size:13px;margin:2px 0 6px}.pw-row input{width:100%;max-width:420px;padding:10px 12px;font-size:16px;border:1px solid #cfd3da;border-radius:8px;font-family:ui-monospace,Menlo,monospace}.phelp{flex-basis:100%;font-size:14px;line-height:1.45;background:#fff8e6;border:1px solid #f0d58a;border-radius:8px;padding:10px 12px;color:#333}.phelp #pfail{margin-top:8px;color:#9b2c00}.phelp a{color:#1d67cd;font-weight:bold}@media print{.pbar{display:none!important}}.perbag{display:inline-flex;align-items:center;gap:8px;font-weight:600;margin:0 0 12px}.perbag input{width:70px;padding:8px 10px;font-size:16px;border:1px solid #cfd3da;border-radius:8px}.lbl .bag{font-size:13px;font-weight:800;letter-spacing:.04em;margin-top:3px;padding:1px 8px;background:#000;color:#fff;border-radius:3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.today-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.today h2{margin:0 0 2px}.day-pick{margin:12px 0 4px;align-items:center}.day-pick .muted{font-weight:600;margin-right:4px}.today-progress{margin:14px 0 6px}.today-progress .bar{height:10px;background:#eceef2;border-radius:99px;overflow:hidden;margin-top:6px}.today-progress .bar i{display:block;height:100%;background:#1f9d55}.steps{list-style:none;margin:10px 0 0;padding:0}.step{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line)}.step-check{flex:0 0 44px;height:44px;border-radius:50%;border:2px solid #c9ced6;background:#fff;font:inherit;font-weight:800;font-size:18px;color:#555;cursor:pointer}.step.done .step-check{background:#1f9d55;border-color:#1f9d55;color:#fff}.step-check:disabled{cursor:default}.step-body{flex:1;min-width:0}.step-body b{display:block;font-size:1.05rem}.step-body span{display:block;color:var(--muted);font-size:.92rem}.step.done .step-body b{color:#1f6b3e}.step-btn{white-space:nowrap}.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}.new-alert{background:#fff4e5;border:1.5px solid #f2b04c;border-radius:12px;padding:12px 14px;margin:12px 0 4px;font-weight:600}.fresh{display:block;font-style:normal;font-weight:700;color:#b54708;margin-top:3px}.empty-today{padding:18px 0;color:var(--muted)}.small-note{font-size:.9rem;margin:12px 0 0}.subnav{margin:-4px 0 16px}.other-sizes{margin-top:12px}.other-sizes summary{cursor:pointer;color:var(--muted);font-weight:600;padding:6px 0}.set-h{font-size:1rem;margin:18px 0 8px}.opt-row{display:flex;flex-wrap:wrap;gap:10px}.opt{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;font:inherit;font-weight:600;cursor:pointer;min-height:48px}.opt.on{border-color:#1f9d55;background:#eefaf3;color:#1f6b3e}.opt:disabled{opacity:.7;cursor:default}@media (max-width:600px){body{font-size:18px}.wrap{padding:12px 12px 40px}.btn,.chip,.opt{min-height:52px;font-size:17px}.tab{padding:15px 16px;font-size:17px}.print-row,.stats{grid-template-columns:1fr}.print-btn{min-height:84px;font-size:17px}.step{flex-wrap:wrap}.step{gap:12px}.step-body{flex-basis:calc(100% - 64px)}.step-btn{width:100%;min-height:54px;font-size:18px}.step-check{flex-basis:48px;height:48px}.today h2{font-size:1.35rem}.top .btn.sm{min-height:44px}}</style><style id="pstyle"></style></head>
 <body>
 <div id="app"><div class="loading">Loading…</div></div>
 <div id="print"></div>
@@ -196,7 +196,7 @@ var Q = new URLSearchParams(location.search);
 var TVCODE = Q.get('tv') || '';
 var MODE = TVCODE ? 'tv' : (Q.get('mode') === 'voice' ? 'voice' : 'app');
 var CODE = TVCODE; if (!CODE) { try { CODE = localStorage.getItem('ampCode') || ''; } catch (e) {} }
-var D = null, ST = { range: 'open', from: '', to: '', day: '', tab: 'meals' };
+var D = null, ST = { range: 'open', from: '', to: '', day: '', tab: 'today', dayPicked: false };
 try { var sv = JSON.parse(sessionStorage.getItem('ampView') || 'null'); if (sv) ST = Object.assign(ST, sv); } catch (e) {}
 var SIZES = { '4oz': '4 oz Meals', '6oz': '6 oz Meals' };
 var STL = { '': 'To make', made: 'Made', packed: 'Packed', picked: 'Picked up' };
@@ -215,7 +215,15 @@ function api(act, p) {
 function nat(a, b) { return String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: 'base' }); }
 
 /* ---------- data helpers (same rules as before) ---------- */
-function dayKey(o) { return o.day === '' ? '_none' : o.day; }
+var DELIVERY_DAY = 'Wednesday';
+function dayKey(o) { if (o.day) return o.day; return /deliver/i.test((o.location || '') + ' ' + (o.short || '')) ? DELIVERY_DAY : '_none'; }
+var WD = { Sunday: 0, Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6 };
+function nextDay(all) { var now = new Date(), t = now.getDay(), best = '', bd = 99; dayCounts(all).forEach(function (x) { var d = x[0]; if (!(d in WD)) return; var diff = (WD[d] - t + 7) % 7; if (diff === 0 && now.getHours() >= 18) diff = 7; if (diff < bd) { bd = diff; best = d; } }); return best; }
+function prefs() { return Object.assign({ bagFmt: '5163', contFmt: '5160', perBag: 10 }, (D && D.prefs) || {}); }
+function ckKey() { return ymd() + '|' + (ST.day || 'all'); }
+function ckGet() { return ((D && D.checklist) || {})[ckKey()] || {}; }
+function ckSet(step, on) { return api('check', { key: ckKey(), step: step, on: !!on }).then(function (j) { if (j.ok && D) { D.checklist = j.checklist; if (MODE === 'app' && !document.body.classList.contains('printing')) render(); } }); }
+var SETTINGS_TABS = ['setup', 'limits', 'screens', 'passwords', 'voice'];
 function dayLabel(d) { return d === '' ? 'All pickup days' : (d === '_none' ? 'No day / Delivery' : d + ' pickup'); }
 function byDay(orders, d) { return d === '' ? orders : orders.filter(function (o) { return dayKey(o) === d; }); }
 function dayCounts(orders) { var s = {}; orders.forEach(function (o) { var k = dayKey(o); s[k] = (s[k] || 0) + 1; }); return DAYS.filter(function (d) { return s[d]; }).map(function (d) { return [d, s[d]]; }); }
@@ -268,21 +276,26 @@ function render() {
   if (!D) return;
   document.body.className = '';
   var owner = D.role === 'owner';
-  var all = D.orders || [], orders = byDay(all, ST.day);
+  var all = D.orders || [];
+  if (!ST.dayPicked) ST.day = nextDay(all);
+  var orders = byDay(all, ST.day);
   var toMake = leftToMake(orders), tot = totals(toMake), allTot = totals(orders), sp = specials(toMake);
   var mealsLeft = mealCount(toMake), mealsAll = mealCount(orders);
   var packed = orders.filter(function (o) { return o.status === 'packed' || o.status === 'picked'; }).length;
   var limits = D.limits || {}, ord = ordered(orders), ordMap = {}; ord.forEach(function (x) { ordMap[x[0]] = x[1]; });
   var soldOut = ord.filter(function (x) { return limits[x[0]] && x[1] >= limits[x[0]]; }).map(function (x) { return x[0]; });
-  var tab = ST.tab; if (!owner && (tab === 'limits' || tab === 'screens' || tab === 'passwords')) tab = 'meals';
-  var tabs = [['meals', 'Meal List'], ['specials', 'Specials (' + sp.length + ')'], ['pack', 'Pack Orders'], ['gyms', 'Orders by Gym'], ['labels', 'Labels']];
-  if (owner) { tabs.push(['limits', 'Sold-Out Limits' + (soldOut.length ? ' (' + soldOut.length + ')' : '')]); tabs.push(['screens', 'Kitchen Screens']); tabs.push(['passwords', 'Passwords']); }
-  tabs.push(['voice', 'Voice & Pedal']);
+  var tab = ST.tab || 'today'; if (!owner && (tab === 'limits' || tab === 'screens' || tab === 'passwords')) tab = 'setup';
+  var inSettings = SETTINGS_TABS.indexOf(tab) >= 0;
+  var tabs = [['today', 'Today'], ['meals', 'Meal List'], ['specials', 'Specials (' + sp.length + ')'], ['pack', 'Pack Orders'], ['gyms', 'Orders by Gym'], ['labels', 'Labels'], ['settings', '⚙ Settings' + (soldOut.length && owner ? ' (' + soldOut.length + ')' : '')]];
+  var subTabs = [['setup', 'Labels & Bags']];
+  if (owner) { subTabs.push(['limits', 'Sold-Out Limits' + (soldOut.length ? ' (' + soldOut.length + ')' : '')]); subTabs.push(['screens', 'Kitchen Screens']); subTabs.push(['passwords', 'Passwords']); }
+  subTabs.push(['voice', 'Voice & Pedal']);
   var h = [];
   h.push('<div class="install-tip" id="installTip" hidden><span id="installText">Add AMP Kitchen to your home screen: tap <b>Share</b> then <b>Add to Home Screen</b>.</span><button class="x" data-a="hideTip" aria-label="Close">✕</button></div>');
   h.push('<header class="top"><div class="logo">AMP <span>Kitchen</span>' + (owner ? '' : ' <span class="role-tag">Cook</span>') + '</div><div class="top-right"><span class="muted hide-sm">' + today() + '</span>' +
     '<button class="btn ghost sm" data-a="refresh">↻ Refresh</button><button class="btn ghost sm" data-a="logout">Log out</button></div></header><main class="wrap">');
   // range
+  if (tab !== 'today' && !inSettings) {
   h.push('<section class="range card"><div class="range-head"><h2>Which orders?</h2><span class="muted">' + esc(D.label) + (ST.day ? ' · ' + esc(dayLabel(ST.day)) : '') + '</span></div><div class="chips">');
   [['open', 'All open orders'], ['today', 'Today'], ['week', 'This week'], ['7days', 'Last 7 days']].forEach(function (r) { h.push('<button class="chip' + (ST.range === r[0] ? ' on' : '') + '" data-a="range" data-v="' + r[0] + '">' + r[1] + '</button>'); });
   h.push('<span class="custom"><span class="muted" style="font-size:13px">Orders placed</span> <input type="date" id="dFrom" max="' + ymd() + '" value="' + esc(ST.from || ymd()) + '" aria-label="Orders placed from"> to <input type="date" id="dTo" max="' + ymd() + '" value="' + esc(ST.to || ymd()) + '" aria-label="Orders placed to"><button class="chip' + (ST.range === 'custom' ? ' on' : '') + '" data-a="custom">Show</button></span></div>');
@@ -293,16 +306,20 @@ function render() {
     h.push('</div>');
   }
   h.push('</section>');
+  }
   if (D.error) h.push('<div class="alert err"><b>Couldn\'t load orders from Wix.</b> ' + esc(D.error) + '</div>');
   if (soldOut.length && owner) h.push('<div class="alert warn"><b>Sold out:</b> ' + esc(soldOut.join(', ')) + ' hit your limit. Pause ' + (soldOut.length > 1 ? 'them' : 'it') + ' in Wix so no more orders come in. <a href="#" data-a="tab" data-v="limits">See limits</a></div>');
-  h.push('<section class="stats"><div class="stat"><b>' + orders.length + '</b><span>Orders</span></div><div class="stat"><b>' + mealsLeft + '</b><span>Meals left to make' + (mealsLeft < mealsAll ? ' (of ' + mealsAll + ')' : '') + '</span></div>' +
+  if (tab !== 'today' && !inSettings) h.push('<section class="stats"><div class="stat"><b>' + orders.length + '</b><span>Orders</span></div><div class="stat"><b>' + mealsLeft + '</b><span>Meals left to make' + (mealsLeft < mealsAll ? ' (of ' + mealsAll + ')' : '') + '</span></div>' +
     '<div class="stat"><b>' + packed + '/' + orders.length + '</b><span>Orders packed</span><div class="bar"><i style="width:' + (orders.length ? Math.round(packed / orders.length * 100) : 0) + '%"></i></div></div><div class="stat"><b>' + sp.length + '</b><span>Specials left</span></div></section>');
-  h.push('<section class="print-row"><button class="print-btn primary" data-a="print" data-v="all"><b>🖨 Print Morning Packet</b><span>Meal list, specials &amp; packing list for each gym</span></button>' +
+  if (tab !== 'today' && !inSettings) h.push('<section class="print-row"><button class="print-btn primary" data-a="print" data-v="all"><b>🖨 Print Morning Packet</b><span>Meal list, specials &amp; packing list for each gym</span></button>' +
     '<button class="print-btn" data-a="print" data-v="meals"><b>Meal List</b><span>Totals, 4 oz &amp; 6 oz</span></button>' +
     '<button class="print-btn" data-a="print" data-v="labels"><b>Bag Labels</b><span>' + bagLabelCount(orders) + ' labels, by gym</span></button>' +
     '<button class="print-btn" data-a="print" data-v="containers"><b>Container Labels</b><span>' + mealsAll + ' labels, one per meal</span></button></section>');
-  h.push('<nav class="tabs">' + tabs.map(function (t) { return '<button class="tab' + (tab === t[0] ? ' on' : '') + '" data-a="tab" data-v="' + t[0] + '">' + esc(t[1]) + '</button>'; }).join('') + '</nav>');
-  if (!orders.length && !D.error && tab !== 'voice' && tab !== 'screens' && tab !== 'passwords') h.push('<div class="card empty">No orders for ' + esc(String(D.label).toLowerCase()) + '.</div>');
+  h.push('<nav class="tabs">' + tabs.map(function (t) { var on = t[0] === 'settings' ? inSettings : tab === t[0]; return '<button class="tab' + (on ? ' on' : '') + '" data-a="tab" data-v="' + t[0] + '">' + esc(t[1]) + '</button>'; }).join('') + '</nav>');
+  if (inSettings) h.push('<div class="chips subnav">' + subTabs.map(function (t) { return '<button class="chip' + (tab === t[0] ? ' on' : '') + '" data-a="tab" data-v="' + t[0] + '">' + esc(t[1]) + '</button>'; }).join('') + '</div>');
+  if (tab === 'today') todayView(h, all, orders, toMake, sp, packed, mealsAll, owner);
+  if (tab === 'setup') setupView(h, owner);
+  if (!orders.length && !D.error && tab !== 'today' && !inSettings) h.push('<div class="card empty">No orders for ' + esc(String(D.label).toLowerCase()) + '.</div>');
 
   if (tab === 'meals' && orders.length) {
     if (mealsLeft < mealsAll) h.push('<p class="muted" style="margin-top:-4px">Showing meals <b>still to make</b>. Orders marked Made come off this list.</p>');
@@ -353,16 +370,19 @@ function render() {
     });
   }
   if (tab === 'labels' && orders.length) {
-    h.push('<div class="card"><h2>Bag labels</h2><p>One label for every <b>' + perBag() + ' meals</b> in an order, with the customer\'s name, pickup spot and day. Big orders get more labels marked "Bag 1 of 4", "Bag 2 of 4", and so on. <b>' + bagLabelCount(orders) + ' labels</b> for these ' + orders.length + ' orders.</p><label class="perbag">Meals per bag <input id="perBag" type="number" min="1" max="99" inputmode="numeric" value="' + perBag() + '"></label><div class="label-preview">' +
+    h.push('<div class="card"><h2>Bag labels</h2><p>One label for every <b>' + perBag() + ' meals</b> in an order, with the customer\'s name, pickup spot and day. Big orders get more labels marked "Bag 1 of 4", "Bag 2 of 4", and so on. <b>' + bagLabelCount(orders) + ' labels</b> for these ' + orders.length + ' orders.</p>' + (owner ? '<label class="perbag">Meals per bag <input id="perBag" type="number" min="1" max="99" inputmode="numeric" value="' + perBag() + '"></label>' : '') + '<div class="label-preview">' +
       orders.slice(0, 3).map(function (o) { return '<div class="lblp"><div class="lbl-loc">' + esc(o.short) + '</div><div class="lbl-name">' + esc(o.name) + '</div></div>'; }).join('') + '</div><div class="print-row" style="margin:0">' +
+      '<button class="print-btn primary" data-a="print" data-v="labels"><b>🖨 Print bag labels</b><span>' + bagLabelCount(orders) + ' labels · ' + esc(FMT_NAMES[prefs().bagFmt]) + '</span></button></div>' +
+      '<details class="other-sizes"><summary>Other label sizes</summary><div class="print-row" style="margin:10px 0 0">' +
       '<button class="print-btn" data-a="print" data-v="labels" data-f="5163"><b>2" × 4" sheets</b><span>Avery 5163 / 8163 · 10 per sheet</span></button>' +
       '<button class="print-btn" data-a="print" data-v="labels" data-f="5160"><b>1" × 2⅝" sheets</b><span>Avery 5160 / 8160 · 30 per sheet</span></button>' +
       '<button class="print-btn" data-a="print" data-v="labels" data-f="4x6"><b>Label printer 4" × 6"</b><span>Rollo, Zebra, Munbyn, etc.</span></button>' +
-      '<button class="print-btn" data-a="print" data-v="labels" data-f="2x4"><b>Label printer 2¼" × 4"</b><span>DYMO 30256 and similar</span></button></div></div>');
+      '<button class="print-btn" data-a="print" data-v="labels" data-f="2x4"><b>Label printer 2¼" × 4"</b><span>DYMO 30256 and similar</span></button></div></details></div>');
     var ex = orders[0].items[0];
     h.push('<div class="card"><h2>Container labels</h2><p>One small label for every meal container: meal, size, date made, and any special in bold. The customer\'s name is on it too.</p>' +
       (ex ? '<div class="label-preview" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))"><div class="lblp" style="text-align:left"><div style="font-weight:800">' + esc(ex.meal) + '</div><div><b>' + sz(ex.size) + '</b> · Made ' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '</div><div class="muted">' + esc(orders[0].name) + '</div></div></div>' : '') +
-      '<div class="print-row" style="margin:0"><button class="print-btn" data-a="print" data-v="containers" data-f="5160"><b>1" × 2⅝" sheets</b><span>Avery 5160 / 8160 · 30 per sheet</span></button><button class="print-btn" data-a="print" data-v="containers" data-f="2x1"><b>Label printer 2" × 1"</b><span>Rollo and similar</span></button></div></div>');
+      '<div class="print-row" style="margin:0"><button class="print-btn primary" data-a="print" data-v="containers"><b>🖨 Print container labels</b><span>' + mealsAll + ' labels · ' + esc(FMT_NAMES[prefs().contFmt]) + '</span></button></div>' +
+      '<details class="other-sizes"><summary>Other label sizes</summary><div class="print-row" style="margin:10px 0 0">' + '<button class="print-btn" data-a="print" data-v="containers" data-f="5160"><b>1" × 2⅝" sheets</b><span>Avery 5160 / 8160 · 30 per sheet</span></button><button class="print-btn" data-a="print" data-v="containers" data-f="2x1"><b>Label printer 2" × 1"</b><span>Rollo and similar</span></button></div></details></div>');
   }
   if (tab === 'limits' && owner) {
     h.push('<div class="card"><h2>Sold-out limits</h2><p class="muted">Set the most of each meal you can make for this order window (both sizes together). When a meal reaches its limit, you\'ll see a <b>Sold out</b> alert so you can pause it in Wix. Leave blank for no limit.</p><table class="list wide"><tr><th>Meal</th><th>Ordered</th><th>Limit</th><th></th></tr>');
@@ -411,12 +431,15 @@ function installTip() {
 }
 function refresh(keep) { var y = window.scrollY; return load().then(function () { render(); if (keep) window.scrollTo(0, y); }); }
 document.addEventListener('change', function (e) {
-  if (e.target && e.target.id === 'perBag') { var n = parseInt(e.target.value, 10); if (!(n >= 1 && n <= 99)) { toast('Enter a number from 1 to 99.'); e.target.value = perBag(); return; } try { localStorage.setItem('ampPerBag', String(n)); } catch (x) {} toast('Bag labels: ' + n + ' meals per bag'); render(); }
+  if (e.target && e.target.id === 'perBag') { var n = parseInt(e.target.value, 10); if (!(n >= 1 && n <= 99)) { toast('Enter a number from 1 to 99.'); e.target.value = perBag(); return; } api('prefs', { perBag: n }).then(function (j) { if (j.ok) { D.prefs = j.prefs; toast(n + ' meals per bag, saved for every device'); render(); } else { toast(j.error || 'Try again'); e.target.value = perBag(); } }); }
 });
 document.addEventListener('click', function (e) {
   var b = e.target.closest('[data-a]'); if (!b || MODE !== 'app') return;
   var a = b.dataset.a, v = b.dataset.v;
-  if (a === 'tab') { e.preventDefault(); ST.tab = v; saveView(); render(); window.scrollTo(0, 0); }
+  if (a === 'tab') { e.preventDefault(); if (v === 'settings') v = ST.lastSettings || 'setup'; if (SETTINGS_TABS.indexOf(v) >= 0) ST.lastSettings = v; ST.tab = v; saveView(); render(); window.scrollTo(0, 0); }
+  else if (a === 'ck') { ckSet(v, b.dataset.on === '1'); }
+  else if (a === 'gopack') { ST.tab = 'pack'; saveView(); render(); window.scrollTo(0, 0); }
+  else if (a === 'pref') { var pp = {}; pp[b.dataset.k] = v; b.disabled = true; api('prefs', pp).then(function (j) { if (j.ok) { D.prefs = j.prefs; toast('Saved for every device'); render(); } else { toast(j.error || 'Try again'); b.disabled = false; } }); }
   else if (a === 'range') { ST.range = v; ST.from = ST.to = ''; saveView(); $('app').innerHTML = '<div class="loading">Loading…</div>'; refresh(); }
   else if (a === 'custom') {
     var df = $('dFrom').value, dt = $('dTo').value, td = ymd();
@@ -424,7 +447,7 @@ document.addEventListener('click', function (e) {
     if (df > dt) { toast('The first date has to be before the second date.'); $('dFrom').focus(); return; }
     if (dt > td || df > td) { toast('These dates are when orders were placed, so they can\'t be in the future. To see upcoming pickups, use the Pickup day buttons.'); return; }
     ST.range = 'custom'; ST.from = df; ST.to = dt; saveView(); $('app').innerHTML = '<div class="loading">Loading…</div>'; refresh(); }
-  else if (a === 'day') { ST.day = v; saveView(); render(); }
+  else if (a === 'day') { ST.day = v; ST.dayPicked = true; saveView(); render(); }
   else if (a === 'refresh') refresh(true);
   else if (a === 'logout') logout();
   else if (a === 'hideTip') { $('installTip').hidden = true; try { localStorage.setItem('ampTip', '1'); } catch (x) {} }
@@ -454,15 +477,57 @@ var FORMATS = {
   '5160': { sheet: true, cols: 3, rows: 10, w: 2.625, h: 1, top: .5, left: .1875, gapx: .125, name: 15, loc: 9 },
   '4x6': { sheet: false, w: 4, h: 6, name: 40, loc: 24 }, '2x4': { sheet: false, w: 4, h: 2.3125, name: 26, loc: 15 }, '2x1': { sheet: false, w: 2, h: 1, name: 12, loc: 8 }
 };
-function perBag() { var n = 10; try { n = parseInt(localStorage.getItem('ampPerBag'), 10) || 10; } catch (e) {} return Math.max(1, Math.min(99, n)); }
+function perBag() { return Math.max(1, Math.min(99, parseInt(prefs().perBag, 10) || 10)); }
 function mealsIn(o) { return (o.items || []).reduce(function (a, i) { return a + (+i.qty || 0); }, 0); }
 function bagsFor(o) { return Math.max(1, Math.ceil(mealsIn(o) / perBag())); }
 function bagLabelCount(list) { return list.reduce(function (a, o) { return a + bagsFor(o); }, 0); }
+var FMT_NAMES = { '5163': '2" × 4" sheets (Avery 5163)', '5160': '1" × 2⅝" sheets (Avery 5160)', '4x6': '4" × 6" label printer', '2x4': '2¼" × 4" label printer', '2x1': '2" × 1" label printer' };
+function fmtTime(t) { return new Date(t).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); }
+function todayView(h, all, orders, toMake, sp, packed, mealsAll, owner) {
+  var ck = ckGet(), P = prefs();
+  var dayName = ST.day ? (ST.day === '_none' ? 'Orders with no pickup day' : ST.day + ' pickups') : 'All pickup days';
+  h.push('<section class="card today"><div class="today-head"><div><h2>' + esc(dayName) + '</h2><div class="muted">' + orders.length + (orders.length === 1 ? ' order · ' : ' orders · ') + mealsAll + (mealsAll === 1 ? ' meal' : ' meals') + (ST.day === DELIVERY_DAY ? ' · includes Ocean Springs delivery' : '') + '</div></div></div>');
+  var dc = dayCounts(all);
+  if (dc.length) { h.push('<div class="chips day-pick"><span class="muted">Pickup day:</span>'); dc.forEach(function (d) { h.push('<button class="chip' + (ST.day === d[0] ? ' on' : '') + '" data-a="day" data-v="' + d[0] + '">' + esc(d[0] === '_none' ? 'No day' : d[0]) + ' (' + d[1] + ')</button>'); }); h.push('<button class="chip' + (ST.day === '' ? ' on' : '') + '" data-a="day" data-v="">All (' + all.length + ')</button></div>'); }
+  if (D.error) { h.push('</section>'); return; }
+  if (!orders.length) { h.push('<p class="empty-today">No open orders for this day yet.</p></section>'); return; }
+  var allPacked = orders.length && packed >= orders.length;
+  var steps = [
+    { k: 'meals', t: 'Print the meal list', d: mealsAll + ' meals to make, 4 oz & 6 oz', act: 'meals' },
+    { k: 'specials', t: 'Print special requests', d: sp.length ? sp.length + ' special request' + (sp.length > 1 ? 's' : '') : 'No specials. Nothing to print.', act: 'specials', skip: !sp.length },
+    { k: 'bags', t: 'Print bag labels', d: bagLabelCount(orders) + (bagLabelCount(orders) === 1 ? ' label · ' : ' labels · ') + FMT_NAMES[P.bagFmt], act: 'labels' },
+    { k: 'containers', t: 'Print container labels', d: mealsAll + ' labels · ' + FMT_NAMES[P.contFmt], act: 'containers' },
+    { k: 'pack', t: 'Pack orders by gym', d: packed + ' of ' + orders.length + ' orders packed', pack: true }
+  ];
+  function newSince(s) { var info = ck[s.k]; if (!info || s.pack) return 0; var list = s.k === 'specials' ? orders.filter(function (o) { return specials([o]).length; }) : orders; return list.filter(function (o) { return o.created && Date.parse(o.created) > info.t; }).length; }
+  steps.forEach(function (s) { s.fresh = newSince(s); });
+  function isDone(s) { return s.pack ? allPacked : ((ck[s.k] && !s.fresh) || (s.skip && !ck[s.k]) || (s.skip && !s.fresh)); }
+  var doneN = steps.filter(isDone).length, freshMax = Math.max.apply(null, steps.map(function (s) { return s.fresh; }));
+  if (freshMax) h.push('<div class="new-alert">🔔 <b>' + freshMax + ' new order' + (freshMax > 1 ? 's' : '') + '</b> came in after you printed. Reprint the steps marked below.</div>');
+  h.push('<div class="today-progress"><b>' + doneN + ' of ' + steps.length + ' done</b><div class="bar"><i style="width:' + Math.round(doneN / steps.length * 100) + '%"></i></div></div><ol class="steps">');
+  steps.forEach(function (s, i) {
+    var done = isDone(s), info = ck[s.k];
+    h.push('<li class="step' + (done ? ' done' : '') + '"><button class="step-check" ' + (s.pack || s.skip ? 'disabled' : 'data-a="ck" data-v="' + s.k + '" data-on="' + (done ? '0' : '1') + '"') + ' aria-label="' + (done ? 'Mark not done' : 'Mark done') + '">' + (done ? '✓' : (i + 1)) + '</button>' +
+      '<div class="step-body"><b>' + esc(s.t) + '</b><span>' + esc(s.d) + (info && !s.pack ? ' · Printed ' + fmtTime(info.t) + (info.by === 'cook' ? ' by cook' : '') : '') + '</span>' + (s.fresh ? '<em class="fresh">' + s.fresh + ' new order' + (s.fresh > 1 ? 's' : '') + ' since then. Print again.</em>' : '') + '</div>' +
+      (s.pack ? '<button class="btn step-btn' + (done ? ' ghost' : '') + '" data-a="gopack">Open packing</button>' : (s.skip ? '' : '<button class="btn step-btn' + (done ? ' ghost' : '') + '" data-a="print" data-v="' + s.act + '">' + (done ? 'Print again' : (s.fresh ? '🖨 Print again' : '🖨 Print')) + '</button>')) + '</li>');
+  });
+  h.push('</ol>' + (owner ? '<p class="muted small-note">Label sizes and meals per bag are in <a href="#" data-a="tab" data-v="setup">Settings</a>.</p>' : '') + '</section>');
+}
+function setupView(h, owner) {
+  var P = prefs(), dis = owner ? '' : ' disabled';
+  h.push('<div class="card"><h2>Labels &amp; bags</h2><p>' + (owner ? 'Pick the labels you use. The print buttons will use these on every phone, iPad and computer.' : 'Only the owner can change these.') + '</p>');
+  h.push('<h3 class="set-h">Bag labels</h3><div class="opt-row">');
+  ['5163', '5160', '4x6', '2x4'].forEach(function (f) { h.push('<button class="opt' + (P.bagFmt === f ? ' on' : '') + '" data-a="pref" data-k="bagFmt" data-v="' + f + '"' + dis + '>' + (P.bagFmt === f ? '✓ ' : '') + esc(FMT_NAMES[f]) + '</button>'); });
+  h.push('</div><h3 class="set-h">Container labels</h3><div class="opt-row">');
+  ['5160', '2x1'].forEach(function (f) { h.push('<button class="opt' + (P.contFmt === f ? ' on' : '') + '" data-a="pref" data-k="contFmt" data-v="' + f + '"' + dis + '>' + (P.contFmt === f ? '✓ ' : '') + esc(FMT_NAMES[f]) + '</button>'); });
+  h.push('</div><h3 class="set-h">Meals per bag</h3>' + (owner ? '<label class="perbag">Each bag holds <input id="perBag" type="number" min="1" max="99" inputmode="numeric" value="' + perBag() + '"> meals</label>' : '<p><b>' + perBag() + '</b> meals per bag</p>') +
+    '<p class="muted">Big orders get one bag label for every ' + perBag() + ' meals, marked "Bag 1 of 3" and so on.</p></div>');
+}
 function printView(type, fmt) {
   var orders = byDay(D.orders || [], ST.day), label = D.label + (ST.day ? ' · ' + dayLabel(ST.day) : '');
   var printed = 'Printed ' + new Date().toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' · ' + label;
   var isLabels = type === 'labels' || type === 'containers';
-  fmt = fmt || (type === 'containers' ? '5160' : '5163'); var F = FORMATS[fmt] || FORMATS['5163'];
+  fmt = fmt || (type === 'containers' ? prefs().contFmt : prefs().bagFmt); window.__pvType = type; var F = FORMATS[fmt] || FORMATS['5163'];
   var css = '';
   if (isLabels && F.sheet) css = '@page{size:8.5in 11in;margin:0}.page{width:8.5in;height:11in;padding:' + F.top + 'in 0 0 ' + F.left + 'in;display:grid;grid-template-columns:repeat(' + F.cols + ',' + F.w + 'in);grid-auto-rows:' + F.h + 'in;column-gap:' + F.gapx + 'in;page-break-after:always;break-after:page;margin:0 auto}.page:last-child{page-break-after:auto;break-after:auto}.lbl{width:' + F.w + 'in;height:' + F.h + 'in}@media screen{.page{border:1px solid #ccc;margin:16px auto;background:#fff}.lbl{outline:1px dashed #ccc}#print{background:#eee}}';
   else if (isLabels) css = '@page{size:' + F.w + 'in ' + F.h + 'in;margin:0}.lbl{width:' + F.w + 'in;height:' + F.h + 'in;page-break-after:always;break-after:page}.lbl:last-child{page-break-after:auto}@media screen{#print{background:#eee}.lbl{background:#fff;margin:16px auto;border:1px solid #ccc}}';
@@ -487,6 +552,7 @@ function printView(type, fmt) {
   var md = (new Date().getMonth() + 1) + '/' + new Date().getDate();
   function chunk(list, n) { var out = []; for (var i = 0; i < list.length; i += n) out.push(list.slice(i, i + n)); return out; }
   if (type === 'meals') secMeals();
+  else if (type === 'specials') secSpecials();
   else if (type === 'all') { secMeals(); h.push('<div class="pb"></div>'); secSpecials(); if (orders.length) { h.push('<div class="pb"></div>'); secGyms(); } }
   else if (type === 'containers') {
     var cl = []; orders.forEach(function (o) { o.items.forEach(function (i) { for (var k = 0; k < i.qty; k++) cl.push([i.meal + '|' + i.size, '<div class="lbl cont"><div class="c-meal">' + esc(i.meal) + '</div><div class="c-row"><b>' + sz(i.size) + '</b> · Made ' + md + '</div>' + (i.special ? '<div class="c-sp">' + esc(i.special) + '</div>' : '') + '<div class="c-who">' + esc(o.name) + ' · ' + esc(o.short) + '</div></div>']); }); });
@@ -516,6 +582,8 @@ var _printOpened = false;
 window.addEventListener('beforeprint', function () { _printOpened = true; });
 function doPrint() {
   _printOpened = false;
+  var STEP = { meals: ['meals'], specials: ['specials'], labels: ['bags'], containers: ['containers'], all: ['meals', 'specials'] }[window.__pvType] || [];
+  STEP.forEach(function (st) { ckSet(st, true); });
   try { window.print(); } catch (e) {}
   setTimeout(function () {
     if (_printOpened) return;
@@ -529,7 +597,7 @@ function doPrint() {
 document.addEventListener('click', function (e) {
   var b = e.target.closest('[data-p]'); if (!b) return;
   if (b.dataset.p === 'print') doPrint();
-  else { document.body.classList.remove('printing'); $('print').innerHTML = ''; $('pstyle').textContent = ''; }
+  else { document.body.classList.remove('printing'); $('print').innerHTML = ''; $('pstyle').textContent = ''; if (D && MODE === 'app') render(); }
 });
 
 /* ---------- TV screen ---------- */
