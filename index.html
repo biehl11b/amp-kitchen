@@ -183,7 +183,7 @@ body.tv{background:#fff;color:#111}
 .keep{display:flex;gap:8px;align-items:center;font-size:.95rem}.keep input{width:22px;height:22px}
 .warnbox{background:#fff7e6;border:1px solid #f5d79e;color:#7a4b00;border-radius:12px;padding:10px 12px;font-size:.92rem}
 @media (max-width:860px){.hf{grid-template-columns:1fr}.talk{min-height:130px}}
-.pw-row{display:block;margin:14px 0}.pw-row b{display:block}.pw-row span{display:block;font-size:13px;margin:2px 0 6px}.pw-row input{width:100%;max-width:420px;padding:10px 12px;font-size:16px;border:1px solid #cfd3da;border-radius:8px;font-family:ui-monospace,Menlo,monospace}</style><style id="pstyle"></style></head>
+.pw-row{display:block;margin:14px 0}.pw-row b{display:block}.pw-row span{display:block;font-size:13px;margin:2px 0 6px}.pw-row input{width:100%;max-width:420px;padding:10px 12px;font-size:16px;border:1px solid #cfd3da;border-radius:8px;font-family:ui-monospace,Menlo,monospace}.phelp{flex-basis:100%;font-size:14px;line-height:1.45;background:#fff8e6;border:1px solid #f0d58a;border-radius:8px;padding:10px 12px;color:#333}.phelp #pfail{margin-top:8px;color:#9b2c00}.phelp a{color:#1d67cd;font-weight:bold}@media print{.pbar{display:none!important}}</style><style id="pstyle"></style></head>
 <body>
 <div id="app"><div class="loading">Loading…</div></div>
 <div id="print"></div>
@@ -462,7 +462,7 @@ function printView(type, fmt) {
   else css = '@page{size:letter;margin:.4in}@media print{.sheet{padding:0}}';
   css += '.lbl .nm{font-size:' + F.name + 'px}.lbl .loc{font-size:' + F.loc + 'px}.c-meal{font-weight:bold;font-size:' + (fmt === '2x1' ? 11 : 12) + 'px}';
   $('pstyle').textContent = css;
-  var h = ['<div class="pbar"><button data-p="print">🖨 Print</button><button class="back" data-p="back">← Back</button><span>' + orders.length + ' orders · ' + esc(label) + (isLabels ? ' · set printer to "Actual size" / 100%' : '') + '</span></div>'];
+  var h = ['<div class="pbar"><button data-p="print">🖨 Choose printer &amp; print</button><button class="back" data-p="back">← Back</button><span>' + orders.length + ' orders · ' + esc(label) + '</span>' + printHelp(isLabels) + '</div>'];
   function secMeals() { var t = totals(orders), all = 0; t.forEach(function (g) { all += sum(g[1]); });
     h.push('<div class="sheet"><h1>Meal List</h1><div class="sub">' + esc(printed) + ' · ' + orders.length + ' orders · <b>' + all + ' meals total</b></div><div class="two">');
     t.forEach(function (g) { h.push('<div><h2><span>' + esc(sizeLabel(g[0])) + '</span><span>' + sum(g[1]) + ' meals</span></h2><table>' + g[1].map(function (x) { return '<tr><td style="width:30px"><span class="box"></span></td><td class="pn">' + x[1] + '</td><td class="pm">' + esc(x[0]) + '</td></tr>'; }).join('') + '</table>' + (g[1].length ? '' : '<div class="none">None</div>') + '</div>'); });
@@ -495,11 +495,32 @@ function printView(type, fmt) {
   }
   $('print').innerHTML = h.join('');
   document.body.classList.add('printing'); window.scrollTo(0, 0);
-  setTimeout(function () { window.print(); }, 500);
+}
+var IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+function printHelp(isLabels) {
+  var steps = IOS
+    ? 'Tap <b>Choose printer &amp; print</b>, then on the next screen tap <b>Printer</b> at the top and pick yours. Don\'t see your printer? It has to be on the same Wi-Fi and support AirPrint. If not, print from a computer.'
+    : 'Click <b>Choose printer &amp; print</b>. In the print window, pick your printer next to <b>Destination</b> or <b>Printer</b>. If it says "Save as PDF", change it to your printer.';
+  if (isLabels) steps += ' For labels, set <b>Scale</b> to <b>100% / Actual size</b> and turn <b>Headers and footers</b> off.';
+  return '<div class="phelp">' + steps + '<div id="pfail" hidden></div></div>';
+}
+var _printOpened = false;
+window.addEventListener('beforeprint', function () { _printOpened = true; });
+function doPrint() {
+  _printOpened = false;
+  try { window.print(); } catch (e) {}
+  setTimeout(function () {
+    if (_printOpened) return;
+    var f = $('pfail'); if (!f) return;
+    f.hidden = false;
+    f.innerHTML = '<b>The print screen didn\'t open?</b> ' + (IOS && navigator.standalone
+      ? 'Printing doesn\'t always work from the home-screen icon. <a href="' + esc(location.href) + '" target="_blank" rel="noopener">Open the app in Safari</a>, sign in, and print from there.'
+      : 'Use your browser\'s menu and choose <b>Print</b> (or press Ctrl+P / Cmd+P).');
+  }, 1500);
 }
 document.addEventListener('click', function (e) {
   var b = e.target.closest('[data-p]'); if (!b) return;
-  if (b.dataset.p === 'print') window.print();
+  if (b.dataset.p === 'print') doPrint();
   else { document.body.classList.remove('printing'); $('print').innerHTML = ''; $('pstyle').textContent = ''; }
 });
 
