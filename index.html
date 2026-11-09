@@ -183,7 +183,7 @@ body.tv{background:#fff;color:#111}
 .keep{display:flex;gap:8px;align-items:center;font-size:.95rem}.keep input{width:22px;height:22px}
 .warnbox{background:#fff7e6;border:1px solid #f5d79e;color:#7a4b00;border-radius:12px;padding:10px 12px;font-size:.92rem}
 @media (max-width:860px){.hf{grid-template-columns:1fr}.talk{min-height:130px}}
-.pw-row{display:block;margin:14px 0}.pw-row b{display:block}.pw-row span{display:block;font-size:13px;margin:2px 0 6px}.pw-row input{width:100%;max-width:420px;padding:10px 12px;font-size:16px;border:1px solid #cfd3da;border-radius:8px;font-family:ui-monospace,Menlo,monospace}.phelp{flex-basis:100%;font-size:14px;line-height:1.45;background:#fff8e6;border:1px solid #f0d58a;border-radius:8px;padding:10px 12px;color:#333}.phelp #pfail{margin-top:8px;color:#9b2c00}.phelp a{color:#1d67cd;font-weight:bold}@media print{.pbar{display:none!important}}</style><style id="pstyle"></style></head>
+.pw-row{display:block;margin:14px 0}.pw-row b{display:block}.pw-row span{display:block;font-size:13px;margin:2px 0 6px}.pw-row input{width:100%;max-width:420px;padding:10px 12px;font-size:16px;border:1px solid #cfd3da;border-radius:8px;font-family:ui-monospace,Menlo,monospace}.phelp{flex-basis:100%;font-size:14px;line-height:1.45;background:#fff8e6;border:1px solid #f0d58a;border-radius:8px;padding:10px 12px;color:#333}.phelp #pfail{margin-top:8px;color:#9b2c00}.phelp a{color:#1d67cd;font-weight:bold}@media print{.pbar{display:none!important}}.perbag{display:inline-flex;align-items:center;gap:8px;font-weight:600;margin:0 0 12px}.perbag input{width:70px;padding:8px 10px;font-size:16px;border:1px solid #cfd3da;border-radius:8px}.lbl .bag{font-size:13px;font-weight:800;letter-spacing:.04em;margin-top:3px;padding:1px 8px;background:#000;color:#fff;border-radius:3px;-webkit-print-color-adjust:exact;print-color-adjust:exact}</style><style id="pstyle"></style></head>
 <body>
 <div id="app"><div class="loading">Loading…</div></div>
 <div id="print"></div>
@@ -299,7 +299,7 @@ function render() {
     '<div class="stat"><b>' + packed + '/' + orders.length + '</b><span>Orders packed</span><div class="bar"><i style="width:' + (orders.length ? Math.round(packed / orders.length * 100) : 0) + '%"></i></div></div><div class="stat"><b>' + sp.length + '</b><span>Specials left</span></div></section>');
   h.push('<section class="print-row"><button class="print-btn primary" data-a="print" data-v="all"><b>🖨 Print Morning Packet</b><span>Meal list, specials &amp; packing list for each gym</span></button>' +
     '<button class="print-btn" data-a="print" data-v="meals"><b>Meal List</b><span>Totals, 4 oz &amp; 6 oz</span></button>' +
-    '<button class="print-btn" data-a="print" data-v="labels"><b>Bag Labels</b><span>' + orders.length + ' labels, by gym</span></button>' +
+    '<button class="print-btn" data-a="print" data-v="labels"><b>Bag Labels</b><span>' + bagLabelCount(orders) + ' labels, by gym</span></button>' +
     '<button class="print-btn" data-a="print" data-v="containers"><b>Container Labels</b><span>' + mealsAll + ' labels, one per meal</span></button></section>');
   h.push('<nav class="tabs">' + tabs.map(function (t) { return '<button class="tab' + (tab === t[0] ? ' on' : '') + '" data-a="tab" data-v="' + t[0] + '">' + esc(t[1]) + '</button>'; }).join('') + '</nav>');
   if (!orders.length && !D.error && tab !== 'voice' && tab !== 'screens' && tab !== 'passwords') h.push('<div class="card empty">No orders for ' + esc(String(D.label).toLowerCase()) + '.</div>');
@@ -353,7 +353,7 @@ function render() {
     });
   }
   if (tab === 'labels' && orders.length) {
-    h.push('<div class="card"><h2>Bag labels</h2><p>One label per order with the customer\'s name, pickup spot and day, printed in gym order so bags go straight into each cooler.</p><div class="label-preview">' +
+    h.push('<div class="card"><h2>Bag labels</h2><p>One label for every <b>' + perBag() + ' meals</b> in an order, with the customer\'s name, pickup spot and day. Big orders get more labels marked "Bag 1 of 4", "Bag 2 of 4", and so on. <b>' + bagLabelCount(orders) + ' labels</b> for these ' + orders.length + ' orders.</p><label class="perbag">Meals per bag <input id="perBag" type="number" min="1" max="99" inputmode="numeric" value="' + perBag() + '"></label><div class="label-preview">' +
       orders.slice(0, 3).map(function (o) { return '<div class="lblp"><div class="lbl-loc">' + esc(o.short) + '</div><div class="lbl-name">' + esc(o.name) + '</div></div>'; }).join('') + '</div><div class="print-row" style="margin:0">' +
       '<button class="print-btn" data-a="print" data-v="labels" data-f="5163"><b>2" × 4" sheets</b><span>Avery 5163 / 8163 · 10 per sheet</span></button>' +
       '<button class="print-btn" data-a="print" data-v="labels" data-f="5160"><b>1" × 2⅝" sheets</b><span>Avery 5160 / 8160 · 30 per sheet</span></button>' +
@@ -410,6 +410,9 @@ function installTip() {
   $('installTip').hidden = false;
 }
 function refresh(keep) { var y = window.scrollY; return load().then(function () { render(); if (keep) window.scrollTo(0, y); }); }
+document.addEventListener('change', function (e) {
+  if (e.target && e.target.id === 'perBag') { var n = parseInt(e.target.value, 10); if (!(n >= 1 && n <= 99)) { toast('Enter a number from 1 to 99.'); e.target.value = perBag(); return; } try { localStorage.setItem('ampPerBag', String(n)); } catch (x) {} toast('Bag labels: ' + n + ' meals per bag'); render(); }
+});
 document.addEventListener('click', function (e) {
   var b = e.target.closest('[data-a]'); if (!b || MODE !== 'app') return;
   var a = b.dataset.a, v = b.dataset.v;
@@ -451,6 +454,10 @@ var FORMATS = {
   '5160': { sheet: true, cols: 3, rows: 10, w: 2.625, h: 1, top: .5, left: .1875, gapx: .125, name: 15, loc: 9 },
   '4x6': { sheet: false, w: 4, h: 6, name: 40, loc: 24 }, '2x4': { sheet: false, w: 4, h: 2.3125, name: 26, loc: 15 }, '2x1': { sheet: false, w: 2, h: 1, name: 12, loc: 8 }
 };
+function perBag() { var n = 10; try { n = parseInt(localStorage.getItem('ampPerBag'), 10) || 10; } catch (e) {} return Math.max(1, Math.min(99, n)); }
+function mealCount(o) { return (o.items || []).reduce(function (a, i) { return a + (+i.qty || 0); }, 0); }
+function bagsFor(o) { return Math.max(1, Math.ceil(mealCount(o) / perBag())); }
+function bagLabelCount(list) { return list.reduce(function (a, o) { return a + bagsFor(o); }, 0); }
 function printView(type, fmt) {
   var orders = byDay(D.orders || [], ST.day), label = D.label + (ST.day ? ' · ' + dayLabel(ST.day) : '');
   var printed = 'Printed ' + new Date().toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' · ' + label;
@@ -488,10 +495,11 @@ function printView(type, fmt) {
     else if (F.sheet) chunk(cl, F.cols * F.rows).forEach(function (c) { h.push('<div class="page">' + c.join('') + '</div>'); });
     else h.push(cl.join(''));
   } else if (type === 'labels') {
-    var one = function (o) { return '<div class="lbl"><div class="loc">' + esc(o.short) + (o.day ? ' · ' + o.day.slice(0, 3).toUpperCase() : '') + '</div><div class="nm">' + esc(o.name) + '</div><div class="num">#' + esc(o.number) + '</div></div>'; };
-    if (!orders.length) h.push('<p style="padding:30px">No orders to label.</p>');
-    else if (F.sheet) chunk(orders, F.cols * F.rows).forEach(function (c) { h.push('<div class="page">' + c.map(one).join('') + '</div>'); });
-    else h.push(orders.map(one).join(''));
+    var bags = []; orders.forEach(function (o) { var n = bagsFor(o); for (var k = 1; k <= n; k++) bags.push({ o: o, k: k, n: n }); });
+    var one = function (b) { var o = b.o; return '<div class="lbl"><div class="loc">' + esc(o.short) + (o.day ? ' · ' + o.day.slice(0, 3).toUpperCase() : '') + '</div><div class="nm">' + esc(o.name) + '</div><div class="num">#' + esc(o.number) + '</div>' + (b.n > 1 ? '<div class="bag">BAG ' + b.k + ' OF ' + b.n + '</div>' : '') + '</div>'; };
+    if (!bags.length) h.push('<p style="padding:30px">No orders to label.</p>');
+    else if (F.sheet) chunk(bags, F.cols * F.rows).forEach(function (c) { h.push('<div class="page">' + c.map(one).join('') + '</div>'); });
+    else h.push(bags.map(one).join(''));
   }
   $('print').innerHTML = h.join('');
   document.body.classList.add('printing'); window.scrollTo(0, 0);
