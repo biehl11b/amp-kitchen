@@ -206,7 +206,7 @@ var $ = function (id) { return document.getElementById(id); };
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 function sz(s) { return s === '4oz' ? '4 oz' : s === '6oz' ? '6 oz' : ''; }
 function sizeLabel(k) { return SIZES[k] || 'By the Pound & Other Items'; }
-function toast(t) { var e = $('toast'); e.textContent = t; e.hidden = false; clearTimeout(window._tt); window._tt = setTimeout(function () { e.hidden = true; }, 2400); }
+function toast(t) { var e = $('toast'); e.textContent = t; e.hidden = false; clearTimeout(window._tt); window._tt = setTimeout(function () { e.hidden = true; }, Math.max(2400, String(t).length * 55)); }
 function saveView() { try { sessionStorage.setItem('ampView', JSON.stringify(ST)); } catch (e) {} }
 function api(act, p) {
   return fetch(API + 'kitchenApi', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ code: CODE, act: act, p: p || {} }), cache: 'no-store' })
@@ -285,7 +285,7 @@ function render() {
   // range
   h.push('<section class="range card"><div class="range-head"><h2>Which orders?</h2><span class="muted">' + esc(D.label) + (ST.day ? ' · ' + esc(dayLabel(ST.day)) : '') + '</span></div><div class="chips">');
   [['open', 'All open orders'], ['today', 'Today'], ['week', 'This week'], ['7days', 'Last 7 days']].forEach(function (r) { h.push('<button class="chip' + (ST.range === r[0] ? ' on' : '') + '" data-a="range" data-v="' + r[0] + '">' + r[1] + '</button>'); });
-  h.push('<span class="custom"><input type="date" id="dFrom" value="' + esc(ST.from || ymd()) + '" aria-label="From"> to <input type="date" id="dTo" value="' + esc(ST.to || ymd()) + '" aria-label="To"><button class="chip' + (ST.range === 'custom' ? ' on' : '') + '" data-a="custom">Show</button></span></div>');
+  h.push('<span class="custom"><span class="muted" style="font-size:13px">Orders placed</span> <input type="date" id="dFrom" max="' + ymd() + '" value="' + esc(ST.from || ymd()) + '" aria-label="Orders placed from"> to <input type="date" id="dTo" max="' + ymd() + '" value="' + esc(ST.to || ymd()) + '" aria-label="Orders placed to"><button class="chip' + (ST.range === 'custom' ? ' on' : '') + '" data-a="custom">Show</button></span></div>');
   var dc = dayCounts(all);
   if (dc.length > 1 || ST.day) {
     h.push('<div class="chips" style="margin-top:12px"><span class="muted" style="font-weight:600;margin-right:4px">Pickup day:</span><button class="chip' + (ST.day === '' ? ' on' : '') + '" data-a="day" data-v="">All days (' + all.length + ')</button>');
@@ -415,7 +415,12 @@ document.addEventListener('click', function (e) {
   var a = b.dataset.a, v = b.dataset.v;
   if (a === 'tab') { e.preventDefault(); ST.tab = v; saveView(); render(); window.scrollTo(0, 0); }
   else if (a === 'range') { ST.range = v; ST.from = ST.to = ''; saveView(); $('app').innerHTML = '<div class="loading">Loading…</div>'; refresh(); }
-  else if (a === 'custom') { ST.range = 'custom'; ST.from = $('dFrom').value; ST.to = $('dTo').value; saveView(); $('app').innerHTML = '<div class="loading">Loading…</div>'; refresh(); }
+  else if (a === 'custom') {
+    var df = $('dFrom').value, dt = $('dTo').value, td = ymd();
+    if (!df || !dt) { toast('Pick both dates.'); return; }
+    if (df > dt) { toast('The first date has to be before the second date.'); $('dFrom').focus(); return; }
+    if (dt > td || df > td) { toast('These dates are when orders were placed, so they can\'t be in the future. To see upcoming pickups, use the Pickup day buttons.'); return; }
+    ST.range = 'custom'; ST.from = df; ST.to = dt; saveView(); $('app').innerHTML = '<div class="loading">Loading…</div>'; refresh(); }
   else if (a === 'day') { ST.day = v; saveView(); render(); }
   else if (a === 'refresh') refresh(true);
   else if (a === 'logout') logout();
