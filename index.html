@@ -277,7 +277,6 @@ function render() {
   document.body.className = '';
   var owner = D.role === 'owner';
   var all = D.orders || [];
-  if (!ST.dayPicked) ST.day = nextDay(all);
   var orders = byDay(all, ST.day);
   var toMake = leftToMake(orders), tot = totals(toMake), allTot = totals(orders), sp = specials(toMake);
   var mealsLeft = mealCount(toMake), mealsAll = mealCount(orders);
