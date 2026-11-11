@@ -194,6 +194,9 @@ var BASE = location.pathname.replace(/[^\/]*$/, '');
 var API = 'https://www.advancedmealprep.com/_functions/';
 var Q = new URLSearchParams(location.search);
 var TVCODE = Q.get('tv') || '';
+var APP_V = '2026-11-11b';
+function checkUpdate() { if (!/^https:/.test(location.protocol)) return; fetch(location.pathname + '?u=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (t) { var m = t.match(/var APP_V = '([^']+)'/); if (m && m[1] !== APP_V) { var k = 'ampUpd' + m[1]; try { if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1'); } catch (e) {} var u = new URLSearchParams(location.search); u.set('v', m[1]); location.replace(location.pathname + '?' + u.toString() + location.hash); } }).catch(function () {}); }
+setTimeout(checkUpdate, 1500); document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') checkUpdate(); });
 var MODE = TVCODE ? 'tv' : (Q.get('mode') === 'voice' ? 'voice' : 'app');
 var CODE = TVCODE; if (!CODE) { try { CODE = localStorage.getItem('ampCode') || ''; } catch (e) {} }
 var D = null, ST = { range: 'open', from: '', to: '', day: '', tab: 'today', dayPicked: false };
